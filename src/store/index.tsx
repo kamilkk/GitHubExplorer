@@ -1,10 +1,9 @@
 import React from 'react';
 
-//todo: github store
-//import GithubStore from './githubStore';
+import GithubStore from './githubStore';
 
 const store = {
-  //githubStore: GithubStore,
+  githubStore: GithubStore,
 };
 
 const storeContext = React.createContext(store);
@@ -20,6 +19,4 @@ export const withStoreProvider = (C: React.FC) => (props: any) => {
 export const useStore = () => React.useContext(storeContext);
 
 // list of hydrate functions from stores needed to be performed before app start
-export const hydrateStores = [
-  // store.githubStore.hydrate(),
-];
+export const hydrateStores = [store.githubStore.hydrate()];
