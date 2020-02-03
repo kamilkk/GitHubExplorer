@@ -12,4 +12,4 @@ Some stuff used:
 
 ## License
 
-This project is [MIT licensed](/LICENSE.md)
+This project is MIT licensed
