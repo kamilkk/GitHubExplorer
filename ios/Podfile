@@ -41,13 +41,3 @@ target 'GitHubExplorer' do
 
   use_native_modules!
 end
-
-target 'GitHubExplorer-tvOS' do
-  # Pods for GitHubExplorer-tvOS
-
-  target 'GitHubExplorer-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-end
