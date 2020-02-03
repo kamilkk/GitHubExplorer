@@ -59,7 +59,9 @@ const GithubStore = types
   }))
   .actions(self => {
     const selectOrganisation = (organisation: string) => {
-      self.selectedOrganisation = organisation;
+      if (self.selectedOrganisation !== organisation) {
+        self.selectedOrganisation = organisation;
+      }
     };
 
     const fetchOrganisationRepos = flow(function*(
@@ -79,7 +81,9 @@ const GithubStore = types
         self.repos.get(organisation)!.receiveState(json);
       } catch (e) {
         console.debug('e', e);
-        self.repos.get(organisation)!.errorState(e.toString());
+        self.repos
+          .get(organisation)!
+          .errorState('Cannot find repositories, check organisation name!');
       }
       return self.repos.get(organisation)!.items.length;
     });

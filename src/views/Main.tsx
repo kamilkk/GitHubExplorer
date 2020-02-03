@@ -3,6 +3,7 @@ import { SafeAreaView, View, Text, FlatList, StyleSheet } from 'react-native';
 import { useObserver } from 'mobx-react';
 
 import { useStore } from '../store';
+import OrganisationInput from '../components/organisationInput';
 
 export const MainId = 'GitHubexplorer.Main';
 
@@ -45,8 +46,14 @@ export const Main: NavigationComponent_MobX<{}> = ({
     githubStore.fetchOrganisationRepos();
   };
 
+  const onEnterOrganisationPressed = (org: string) => {
+    githubStore.selectOrganisation(org);
+    githubStore.fetchOrganisationRepos();
+  };
+
   return useObserver(() => (
     <SafeAreaView style={styles.container}>
+      <OrganisationInput onEnterOrganisation={onEnterOrganisationPressed} />
       {githubStore.reposForSelectedOrganisation.error && (
         <Text style={styles.error}>
           Error {githubStore.reposForSelectedOrganisation.error}
