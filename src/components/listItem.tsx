@@ -2,13 +2,16 @@ import * as React from 'react';
 import { View, Text } from 'react-native';
 
 interface Props {
-  title: string;
-  textSize: number;
+  id: number;
+  name: string;
+  owner: string;
+  stars: number;
+  created: Date;
 }
 
-const ListItem: React.FC<Props> = ({ title, textSize }): JSX.Element => (
+const ListItem: React.FC<Props> = ({ name, owner }): JSX.Element => (
   <View style={{ padding: 12 }}>
-    <Text style={{ fontSize: textSize }}>{title}</Text>
+    <Text style={{ fontSize: 16 }}>{name}</Text>
   </View>
 );
 

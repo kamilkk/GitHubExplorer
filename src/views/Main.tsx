@@ -30,7 +30,7 @@ export const Main: NavigationComponent_MobX<{}> = ({
         keyExtractor={item => item.id}
         refreshing={githubStore.reposForSelectedOrganisation.isFetching}
         onRefresh={onRefresh}
-        renderItem={({ item }) => <Item title={item.name} textSize={16} />}
+        renderItem={({ item }) => <Item name={item.name} />}
       />
     </SafeAreaView>
   ));
