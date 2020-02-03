@@ -9,22 +9,12 @@ async function fetchReposApi(orgName: string) {
   return await response.json();
 }
 
-// const GithubRepo = types.model('GithubRepo', {
-//   id: types.number,
-//   name: types.string,
-//   owner: {
-//     login: types.string,
-//   },
-//   stargazers_count: types.number,
-//   created_at: types.Date,
-// });
-
 const OrganisationRepos = types
   .model('OrganisationRepos', {
     organisation: types.identifier,
     isFetching: types.boolean,
     error: types.maybeNull(types.string),
-    repos: types.array(types.frozen()),
+    items: types.array(types.frozen()),
   })
   .actions(self => {
     const fetchState = () => {
@@ -40,7 +30,7 @@ const OrganisationRepos = types
     const receiveState = (items: any) => {
       self.error = null;
       self.isFetching = false;
-      self.repos = items;
+      self.items = items;
     };
 
     return {
@@ -80,18 +70,18 @@ const GithubStore = types
           organisation,
           isFetching: false,
           error: null,
-          repos: [],
+          items: [],
         });
       }
       self.repos.get(organisation)!.fetchState();
-      // try {
-      //   const json = yield fetchPostsApi(subreddit);
-      //   const posts = json.data.children.map((child: any) => child.data);
-      //   self.postsBySubreddit.get(subreddit)!.receiveState(posts);
-      // } catch (e) {
-      //   self.postsBySubreddit.get(subreddit)!.errorState(e.toString());
-      // }
-      // return self.postsBySubreddit.get(subreddit)!.items.length;
+      try {
+        const json = yield fetchReposApi(organisation);
+        self.repos.get(organisation)!.receiveState(json);
+      } catch (e) {
+        console.debug('e', e);
+        self.repos.get(organisation)!.errorState(e.toString());
+      }
+      return self.repos.get(organisation)!.items.length;
     });
 
     const hydrate = () => {
